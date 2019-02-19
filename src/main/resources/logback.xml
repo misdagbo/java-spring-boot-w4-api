@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{dd/MM/yyyy HH:mm:ss.SSS} [%thread] [%file:%line]
+				%-5level
+				%logger{36} - %msg%n</Pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>TRACE</level>
+		</filter>
+	</appender>
+
+	<appender name="dailyRollingFileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				/home/w4/logs/api-engine-backend.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<append>false</append>
+		<encoder>
+			<Pattern>%d{dd/MM/yyyy HH:mm:ss.SSS} [%thread] [%file:%line]
+				%-5level
+				%logger{36} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.w4" additivity="false">
+		<level value="DEBUG" />
+		<!-- <appender-ref ref="dailyRollingFileAppender" /> -->
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="dailyRollingFileAppender" />
+	</logger>
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="dailyRollingFileAppender" />
+	</root>
+
+</configuration>
